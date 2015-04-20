@@ -260,7 +260,7 @@ print metadata['Date']
 # <codecell>
 # open the first file, read it and then split it into two parts, metadata and body
 data = open(os.path.join(corpus_path, 'UDS2013680-100-full.txt'))
-data = data.read().split("<!--end metadata-->")
+metadata, raw_text = data.read().split("<!--end metadata-->")
 
 # <codecell>
 def parse_metadata(text):
@@ -279,6 +279,18 @@ def parse_metadata(text):
 
 # <codecell>
 parse_metadata(data[0])
+
+# <markdowncell>
+# To do this for all our files, let's put all their information into a dictionary
+
+
+# <codecell>
+all_metadata = []
+for filename in files:
+    f = open(os.path.join(corpus_path, filename), "r")
+    metadata, raw_text = f.read().split("<!--end metadata-->")
+    all_metadata.append(parse_metadata(metadata))
+
 
 # <markdowncell>
 # Now that we're confident that the function works, let's find out a bit about the corpus.
